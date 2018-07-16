@@ -1,3 +1,6 @@
+plugins {
+  id 'maven-publish'
+}
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
@@ -8,7 +11,6 @@ description = """Log4j appender for cloudwatch logs"""
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
-
 
 
 repositories {
@@ -26,13 +28,9 @@ task sourceJar(type: Jar) {
   //if (hasKotlinSource)from { sourceSets.main.allKotlin }
 }
 publishing {
-  repositories { 
-     mavenLocal()
-    }
    publications {
      mavenJava(MavenPublication) {
       from components.java
-      //from components.kotlin
       //artifact sourceJar { classifier "sources" }
      }
    }
