@@ -1,6 +1,8 @@
 package com.vi.aws.logging.log4jappenders;
 
 import com.amazonaws.services.logs.AWSLogsClient;
+import com.amazonaws.services.logs.AWSLogs;
+import com.amazonaws.services.logs.AWSLogsClientBuilder;
 import com.amazonaws.services.logs.model.*;
 import org.apache.logging.log4j.core.Layout;
 import org.apache.logging.log4j.core.LogEvent;
@@ -41,7 +43,7 @@ public class CloudWatchAppender extends AbstractAppender {
     private String logGroupName;
     private String logStreamName;
 
-    private AWSLogsClient awsLogsClient = null;
+    private AWSLogs awsLogsClient = null;
     private volatile boolean queueFull = false;
 
     @PluginFactory
@@ -79,7 +81,8 @@ public class CloudWatchAppender extends AbstractAppender {
 
         try {
 
-            awsLogsClient = new AWSLogsClient(); // this should pull the credentials automatically from the environment
+            //awsLogsClient = new AWSLogsClient(); // this should pull the credentials automatically from the environment
+            awsLogsClient = AWSLogsClientBuilder.defaultClient(); // this should pull the credentials automatically from the environment
 
             // set the group name
             this.logGroupName = awsLogGroupName;

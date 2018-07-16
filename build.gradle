@@ -1,0 +1,43 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+group = 'com.nexstra'
+version = '1.1.0'
+
+description = """Log4j appender for cloudwatch logs"""
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+
+
+repositories {
+     jcenter()
+     maven { url "http://www.oxygenxml.com/maven" }
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+dependencies {
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version:'2.11.0'
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-logs', version:'1.11.338'
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-cloudwatch', version:'1.11.338'
+}
+task sourceJar(type: Jar) { 
+   from sourceSets.main.allJava
+  //if (hasKotlinSource)from { sourceSets.main.allKotlin }
+}
+publishing {
+  repositories { 
+     mavenLocal()
+    }
+   publications {
+     mavenJava(MavenPublication) {
+      from components.java
+      //from components.kotlin
+      //artifact sourceJar { classifier "sources" }
+     }
+   }
+}
+
+artifacts {
+  archives jar
+}
