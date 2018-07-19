@@ -39,3 +39,4 @@ publishing {
 artifacts {
   archives jar
 }
+apply from: 'tc-version.gradle'
