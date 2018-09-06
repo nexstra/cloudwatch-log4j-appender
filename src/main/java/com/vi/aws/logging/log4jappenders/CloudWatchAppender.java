@@ -28,8 +28,8 @@ public class CloudWatchAppender extends AbstractAppender {
 
     private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH.mm.ss"); // aws doesn't allow ":" in stream name
 
-    private static final String AWS_INSTANCE_ID; // per-instance, so static
-    static { AWS_INSTANCE_ID = retrieveInstanceId(); }
+   // private static final String AWS_INSTANCE_ID; // per-instance, so static
+   // static { AWS_INSTANCE_ID = retrieveInstanceId(); }
 
     private final BlockingQueue<InputLogEvent> queue = new LinkedBlockingQueue<>(AWS_LOG_STREAM_MAX_QUEUE_DEPTH);
     private volatile boolean shutdown = false;
@@ -93,7 +93,7 @@ public class CloudWatchAppender extends AbstractAppender {
                 logStreamNamePrefix = ENV_LOG_STREAM_NAME;
             }
             if (logStreamNamePrefix == null) {
-                logStreamNamePrefix = AWS_INSTANCE_ID;
+                logStreamNamePrefix = retrieveInstanceId();// last resort - hangs if not on ec2
             }
             String finalLogStreamName;
             do {
