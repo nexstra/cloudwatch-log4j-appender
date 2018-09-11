@@ -28,6 +28,11 @@ task sourceJar(type: Jar) {
   //if (hasKotlinSource)from { sourceSets.main.allKotlin }
 }
 publishing {
+   repositories { 
+     maven {
+     url "${projectDir}/repo"
+    }
+   }
    publications {
      mavenJava(MavenPublication) {
       from components.java
