@@ -30,7 +30,7 @@ task sourceJar(type: Jar) {
 publishing {
    repositories { 
      maven {
-     url "${projectDir}/repo"
+     url "${project.buildDir}/repo"
     }
    }
    publications {
