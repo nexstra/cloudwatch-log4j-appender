@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="c8af5b73-9e15-444b-9643-c64aa1a1987e" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+  <name>cloudwatch-log4j</name>
+  <parameters>
+    <param name="git-repo" value="cloudwatch-log4j-appender" />
+  </parameters>
+  <project-extensions>
+    <extension id="PROJECT_EXT_36" type="IssueTracker">
+      <parameters>
+        <param name="host" value="https://nexstra.myjetbrains.com/youtrack" />
+        <param name="idPrefix" value="WS" />
+        <param name="key" value="youtrack1" />
+        <param name="name" value="YouTrack" />
+        <param name="secure:password" value="credentialsJSON:0c731d81-0dba-447f-85b5-36067823bf5c" />
+        <param name="type" value="youtrack" />
+        <param name="username" value="build" />
+      </parameters>
+    </extension>
+    <extension id="PROJECT_EXT_38" type="IssueTracker">
+      <parameters>
+        <param name="authType" value="accesstoken" />
+        <param name="name" value="nexstra/webservices" />
+        <param name="pattern" value="#(\d+)" />
+        <param name="repository" value="https://github.com/nexstra/webservices" />
+        <param name="secure:accessToken" value="credentialsJSON:0d7d2544-401b-4b74-a1e6-12279b4f442e" />
+        <param name="secure:password" value="credentialsJSON:2950ec52-c5d4-424b-88f5-63951fe18688" />
+        <param name="type" value="GithubIssues" />
+        <param name="username" value="DALDEI" />
+      </parameters>
+    </extension>
+  </project-extensions>
+  <cleanup>
+    <policy type="days" cleanup-level="EVERYTHING">
+      <parameters>
+        <param name="keepDays.count" value="1" />
+      </parameters>
+    </policy>
+    <options>
+      <option name="preventDependenciesArtifactsFromCleanup" value="false" />
+    </options>
+  </cleanup>
+  <buildTypesOrder order="CloudwatchLog4j_BuildLib" />
+</project>
+

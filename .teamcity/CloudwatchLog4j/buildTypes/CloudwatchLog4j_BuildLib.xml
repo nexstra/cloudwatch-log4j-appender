@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="95d74715-03ff-4eb2-a4d4-ef7bc600161d" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+  <name>buildLib</name>
+  <description />
+  <settings>
+    <options>
+      <option name="artifactRules" value="build/repo =&gt; artifacts.zip" />
+    </options>
+    <disabled-settings>
+      <setting-ref ref="BUILD_EXT_4" />
+    </disabled-settings>
+    <parameters>
+      <param name="gradle-opts" value="-PpublishS3" spec="text display='normal' validationMode='any'" />
+      <param name="gradle-tasks" value="clean build publish" />
+      <param name="version" value="" />
+    </parameters>
+    <build-runners>
+      <runner id="RUNNER_52" name="setBuildNumber" type="setBuildNumber">
+        <parameters>
+          <param name="buildNumber" value="" />
+          <param name="buildPrefix" value="" />
+          <param name="buildSuffix" value="" />
+          <param name="teamcity.step.mode" value="default" />
+          <param name="workingDir" value="" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_51" name="build" type="gradle-runner">
+        <parameters>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="ui.gradleRunner.additional.gradle.cmd.params" value="%gradle-opts%" />
+          <param name="ui.gradleRunner.gradle.tasks.names" value="%gradle-tasks%" />
+          <param name="ui.gradleRunner.gradle.wrapper.useWrapper" value="true" />
+        </parameters>
+      </runner>
+    </build-runners>
+    <vcs-settings>
+      <vcs-entry-ref root-id="NexstraGithub" />
+    </vcs-settings>
+    <requirements />
+    <build-triggers>
+      <build-trigger id="TRIGGER_1" type="buildDependencyTrigger">
+        <parameters>
+          <param name="afterSuccessfulBuildOnly" value="true" />
+          <param name="branchFilter" value="+:&lt;default&gt;" />
+          <param name="dependsOn" value="services_All" />
+        </parameters>
+      </build-trigger>
+      <build-trigger id="vcsTrigger" type="vcsTrigger">
+        <parameters>
+          <param name="branchFilter" value="+:*" />
+          <param name="enableQueueOptimization" value="true" />
+          <param name="groupCheckinsByCommitter" value="true" />
+          <param name="quietPeriodMode" value="USE_DEFAULT" />
+          <param name="watchChangesInDependencies" value="true" />
+        </parameters>
+      </build-trigger>
+    </build-triggers>
+    <build-extensions>
+      <extension id="BUILD_EXT_4" type="BuildFailureOnMetric">
+        <parameters>
+          <param name="anchorBuild" value="lastSuccessful" />
+          <param name="metricKey" value="VisibleArtifactsSize" />
+          <param name="metricThreshold" value="25" />
+          <param name="metricUnits" value="metricUnitsPercents" />
+          <param name="moreOrLess" value="more" />
+          <param name="stopBuildOnFailure" value="true" />
+          <param name="withBuildAnchor" value="true" />
+        </parameters>
+      </extension>
+    </build-extensions>
+    <cleanup />
+  </settings>
+</build-type>
+
