@@ -67,6 +67,11 @@
           <param name="withBuildAnchor" value="true" />
         </parameters>
       </extension>
+      <extension id="gradle-init-scripts" type="gradle-init-scripts">
+        <parameters>
+          <param name="initScriptName" value="buildCache.gradle" />
+        </parameters>
+      </extension>
     </build-extensions>
     <cleanup />
   </settings>
