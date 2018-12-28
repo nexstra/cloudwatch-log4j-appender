@@ -81,26 +81,10 @@ public class CloudWatchAppender extends AbstractAppender {
 
         try {
 
-            //awsLogsClient = new AWSLogsClient(); // this should pull the credentials automatically from the environment
-            awsLogsClient = AWSLogsClientBuilder.defaultClient(); // this should pull the credentials automatically from the environment
-
             // set the group name
             this.logGroupName = awsLogGroupName;
+            this.logStreamName = awsLogStreamName; // resolve in thread
 
-            // determine the stream name (prefix) and suffix it with the timestamp to ensure uniqueness
-            String logStreamNamePrefix = awsLogStreamName;
-            if (logStreamNamePrefix == null) {
-                logStreamNamePrefix = ENV_LOG_STREAM_NAME;
-            }
-            if (logStreamNamePrefix == null) {
-                logStreamNamePrefix = retrieveInstanceId();// last resort - hangs if not on ec2
-            }
-            String finalLogStreamName;
-            do {
-                finalLogStreamName = logStreamNamePrefix + " " + getTimeNow();
-                this.sequenceTokenCache = createLogGroupAndLogStreamIfNeeded(logGroupName, finalLogStreamName);
-            } while (this.sequenceTokenCache != null);
-            logStreamName = finalLogStreamName;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -110,6 +94,25 @@ public class CloudWatchAppender extends AbstractAppender {
     private Runnable messageProcessor = new Runnable() {
         @Override
         public void run() {
+            //awsLogsClient = new AWSLogsClient(); // this should pull the credentials automatically from the environment
+            awsLogsClient = AWSLogsClientBuilder.defaultClient(); // this should pull the credentials automatically from the environment
+
+
+            // determine the stream name (prefix) and suffix it with the timestamp to ensure uniqueness
+            String logStreamNamePrefix = logStreamName;
+            if (logStreamNamePrefix == null) {
+                logStreamNamePrefix = ENV_LOG_STREAM_NAME;
+            }
+            if (logStreamNamePrefix == null) {
+                logStreamNamePrefix = "unspecified" ;// retrieveInstanceId();// last resort - hangs if not on ec2
+            }
+            String finalLogStreamName;
+            do {
+                finalLogStreamName = logStreamNamePrefix + " " + getTimeNow();
+                sequenceTokenCache = createLogGroupAndLogStreamIfNeeded(logGroupName, finalLogStreamName);
+            } while (sequenceTokenCache != null);
+            logStreamName = finalLogStreamName;
+
             debug("Draining queue for " + logStreamName + " stream every " + (flushPeriodMillis / 1000) + "s...");
             while (!shutdown) {
                 try {
