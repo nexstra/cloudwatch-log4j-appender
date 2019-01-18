@@ -1,2 +1,14 @@
 //enableFeaturePreview('STABLE_PUBLISHING')
+pluginManagement {
+  repositories {
+    gradlePluginPortal() 
+    maven{
+      mavenContent {
+        url uri("${rootProject.projectDir}/repo")
+        includeGroup "nexstra"
+        includeGroupByRegex 'nexstra\\..*'
+      }
+    }
+ }
+}
 rootProject.name = 'cloudwatch-log4j-appender'

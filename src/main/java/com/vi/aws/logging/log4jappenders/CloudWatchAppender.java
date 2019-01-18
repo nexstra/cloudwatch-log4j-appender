@@ -45,7 +45,6 @@ public class CloudWatchAppender extends AbstractAppender {
 
     private AWSLogs awsLogsClient = null;
     private volatile boolean queueFull = false;
-
     @PluginFactory
     public static CloudWatchAppender createAppender(@PluginAttribute("name") String name,
                                                        @PluginAttribute("awsLogGroupName") String awsLogGroupName,
@@ -54,8 +53,8 @@ public class CloudWatchAppender extends AbstractAppender {
                                                        @PluginElement("Layout") Layout<Serializable> layout) {
         return new CloudWatchAppender(
                 name == null ? DEFAULT_LOG_APPENDER_NAME : name,
-                awsLogGroupName == null ? DEFAULT_AWS_LOG_GROUP_NAME : awsLogGroupName,
-                awsLogStreamName,
+                awsLogGroupName == null ? Config.getEnvProp("aws.lambda.log.group.name","AWS_LAMBDA_LOG_GROUP_NAME",DEFAULT_AWS_LOG_GROUP_NAME ) : awsLogGroupName,
+                awsLogStreamName == null ? Config.getEnvProp("aws.lambda.log.stream.name","AWS_LAMBDA_LOG_STREAM_NAME",DEFAULT_AWS_LOG_GROUP_NAME )  : awsLogStreamName,
                 awsLogStreamFlushPeriodInSeconds, layout);
     }
 

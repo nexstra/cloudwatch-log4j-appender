@@ -15,9 +15,17 @@ import java.util.Date;
  * Configuration variables and static utility methods.
  */
 public class Config {
+    static String getEnvProp( String property , String env , String def )
+    {
+        String v = System.getProperty(property);
+        if( v == null )
+            v = System.getenv(env);
+        return (v == null ) ? def : v ;
+
+    }
 
     // these variables can be be supplied by the environment
-    protected static final String ENV_LOG_STREAM_NAME = System.getProperty("LOG_STREAM_NAME");
+    protected static final String ENV_LOG_STREAM_NAME = Config.getEnvProp("LOG_STREAM_NAME","AWS_LAMBDA_LOG_STREAM_NAME",null);
 
     // internal hard-coded defaults
     protected static final int AWS_DRAIN_LIMIT = 256; // 1MB of 4K messages -- estimate
