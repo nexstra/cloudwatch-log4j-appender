@@ -76,7 +76,7 @@
     <artifact-dependencies>
       <dependency id="ARTIFACT_DEPENDENCY_44" sourceBuildTypeId="CloudwatchLog4j_BuildLib" cleanDestination="false">
         <revisionRule name="sameChainOrLastFinished" revision="latest.sameChainOrLastFinished" />
-        <artifact sourcePath="artifacts.zip" />
+        <artifact sourcePath="artifacts.zip!** =&gt; repo/&#xD;&#xA;repo/core-dsl/publications.versions.properties =&gt; repo/core-dsl" />
       </dependency>
     </artifact-dependencies>
     <dependencies>
