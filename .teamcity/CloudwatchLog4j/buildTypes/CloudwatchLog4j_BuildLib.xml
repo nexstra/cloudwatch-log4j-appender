@@ -4,7 +4,7 @@
   <description />
   <settings>
     <options>
-      <option name="artifactRules" value="build/repo =&gt; artifacts.zip" />
+      <option name="artifactRules" value="build/repo =&gt; artifacts.zip&#xA;build/publications.versions.properties" />
     </options>
     <disabled-settings>
       <setting-ref ref="BUILD_EXT_4" />
