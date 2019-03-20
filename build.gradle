@@ -20,9 +20,9 @@ repositories {
      maven { url "http://repo.maven.apache.org/maven2" }
 }
 dependencies {
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version:'2.11.0'
-    implementation group: 'com.amazonaws', name: 'aws-java-sdk-logs', version:'1.11.338'
-    implementation group: 'com.amazonaws', name: 'aws-java-sdk-cloudwatch', version:'1.11.338'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version:"${versions.log4j}"
+    implementation group: 'com.amazonaws', name: 'aws-java-sdk-logs', version:"${versions.aws}"
+    implementation group: 'com.amazonaws', name: 'aws-java-sdk-cloudwatch', version:"${versions.aws}"
 }
 task sourceJar(type: Jar) { 
    from sourceSets.main.allJava
