@@ -1,6 +1,6 @@
 plugins {
   id 'maven-publish'
-  id 'nexstra.core-dsl' version '1.1.5' 
+  id 'nexstra.core-dsl' version '1.1.6' 
 }
 apply plugin: 'java'
 apply plugin: 'maven'
