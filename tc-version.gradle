@@ -1,8 +1,3 @@
-ext.getProp = { p,d   ->
-  if( rootProject.hasProperty(p) ) return rootProject.getProperty(p)
-  else return d
-
-}
 def esc( s )
 {
    [ "'" : '|\'' , '(\\[nr|\\[\\]])' : '|$1' , '\\\\u' : '|0x' ].each { n,v  ->
@@ -11,9 +6,12 @@ def esc( s )
    return "'$s'"
 }      
 
-ext.tcBuild = { buildNum  ->
+ext {
+  hasTC = project.hasProperty("teamcity.version")
+  tcBuild = { buildNum  ->
    def bn=esc(buildNum)
    println "##teamcity[buildNumber $bn]"
+  }
 
 }
 
@@ -44,13 +42,41 @@ ext.tcClose  = { String msg ->
 }
 
 
-ext.tcDebug  = rootProject.hasProperty("tc-debug") 
-task setBuildNumber( type: Task ) {
-  outputs.upToDateWhen  {false }
+def _setVersion(){
+     if( ! project.hasProperty("version" ) || project.getProperty("version") == ""  || project.getProperty("version" ) == "unspecified")  {
+    def sv = "git describe --long".execute().text.trim()
+    def ver  =  sv.replaceFirst(/^v/,"").replaceFirst(/^([0-9]+)(\.[0-9]+)?([.-][0-9]+)?.*$/,"\$1\$2\$3")
+    def shortVer =  ver 
+    if( ! hasTC ){
+       def formattedDate = new Date().format("yyMMddHHmmss")
+       ver = ver + "-" + formattedDate
+    }
+    project.version ver
+    project.ext.shortVersion = shortVer
+    project.ext.tagVersion =  shortVer
+    logger.info("tag: $sv version: $ver shortVersion: ${shortVersion}")
+  }
+} 
+task setVersion( type: Task ) {
+  outputs.upToDateWhen {     false }
   doLast {
+    _setVersion()
+   } 
+}
+
+ext.tcDebug  = rootProject.hasProperty("tc-debug") 
+
+
+
+task setBuildNumber( type: Task ){
+  dependsOn setVersion
+  mustRunAfter project.tasks["setVersion"]
+  outputs.upToDateWhen  {false }
+  doLast { 
       def buildPrefix = project.getProp("buildPrefix","")
       def buildSuffix = project.getProp("buildSuffix","")
       def buildNumber = project.getProp("buildNumber",null)
+    def vi = version
     if( tcDebug  ) 
       tcMessage "properties provided buildPrefix=$buildPrefix buildSuffix=$buildSuffix buildNumber=$buildNumber versionInfo=${vi}"
     def bn = buildNumber?: "${buildPrefix}${version}${buildSuffix}"
@@ -63,4 +89,5 @@ task setBuildNumber( type: Task ) {
     tcClose 'setBuildNumber' 
  }
 }
-
+_setVersion()
+//build.dependsOn setVersion
