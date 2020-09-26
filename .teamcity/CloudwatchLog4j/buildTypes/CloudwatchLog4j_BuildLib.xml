@@ -45,15 +45,6 @@
           <param name="dependsOn" value="services_All" />
         </parameters>
       </build-trigger>
-      <build-trigger id="vcsTrigger" type="vcsTrigger">
-        <parameters>
-          <param name="branchFilter" value="+:*" />
-          <param name="enableQueueOptimization" value="true" />
-          <param name="groupCheckinsByCommitter" value="true" />
-          <param name="quietPeriodMode" value="USE_DEFAULT" />
-          <param name="watchChangesInDependencies" value="true" />
-        </parameters>
-      </build-trigger>
     </build-triggers>
     <build-extensions>
       <extension id="BUILD_EXT_4" type="BuildFailureOnMetric">
