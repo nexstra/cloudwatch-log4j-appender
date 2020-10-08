@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="c8af5b73-9e15-444b-9643-c64aa1a1987e" xsi:noNamespaceSchemaLocation="https://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="c8af5b73-9e15-444b-9643-c64aa1a1987e" xsi:noNamespaceSchemaLocation="https://www.jetbrains.com/teamcity/schemas/2020.1/project-config.xsd">
   <name>cloudwatch-log4j</name>
   <parameters>
     <param name="git-repo" value="cloudwatch-log4j-appender" />
