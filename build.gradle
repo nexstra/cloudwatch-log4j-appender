@@ -1,4 +1,4 @@
-lugins {
+plugins {
   id 'maven-publish'
   id 'nexstra.core-dsl' version '1.6'
 }
