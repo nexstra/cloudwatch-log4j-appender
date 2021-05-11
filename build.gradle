@@ -1,9 +1,8 @@
 plugins {
   id 'maven-publish'
-  id 'nexstra.core-dsl' version '1.7'
+  id 'nexstra.core-dsl' version '1.9'
 }
 apply plugin: 'java'
-apply plugin: 'maven'
 apply plugin: 'maven-publish'
 group = 'nexstra.aws'
 version = '1.2.2'
@@ -16,8 +15,8 @@ targetCompatibility = 1.8
 
 repositories {
      jcenter()
-     maven { url "http://www.oxygenxml.com/maven" }
-     maven { url "http://repo.maven.apache.org/maven2" }
+     maven { url "https://www.oxygenxml.com/maven" }
+     maven { url "https://repo.maven.apache.org/maven2" }
 }
 dependencies {
     implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version:"${versions.log4j}"
